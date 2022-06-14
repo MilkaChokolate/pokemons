@@ -1,7 +1,7 @@
 <template>
-  <div class="pokemons-list">
-    <input type="text" v-model="searchQuery">
-    <div v-for="(onePaginate, index) in searchedPosts" :key="onePaginate">
+  <div class="wrapper">
+    <poke-input v-model="searchQuery"></poke-input>
+    <div v-for="(onePaginate, index) in searchedPosts" :key="onePaginate" class="paginate-wrapper">
       <pagination-page :onePaginate="onePaginate" :isActive="index + 1 === this.currentPage"></pagination-page>
     </div>
     <div class="pages-wrapper">
@@ -20,10 +20,11 @@
 <script>
 import axios from 'axios'
 import PaginationPage from "@/components/PaginationPage";
+import PokeInput from "@/components/UI/PokeInput";
 
 export default {
   name: "PokeList",
-  components: {PaginationPage},
+  components: {PaginationPage, PokeInput},
   data() {
     return {
       pokemons: [],
@@ -31,7 +32,7 @@ export default {
       amountPages: 0,
       currentPage: +localStorage.getItem("currentPage") || 1,
       limit: 100,
-      maxOnOnePage: 10,
+      maxOnOnePage: 12,
       offset: 0
     }
   },
@@ -59,6 +60,11 @@ export default {
       localStorage.setItem('currentPage', String(page))
       this.currentPage = page;
     },
+    changePaginationOnSearch(arr){
+      console.log(arr, arr.length)
+      this.amountPages = Math.ceil(arr.length / this.maxOnOnePage);
+      this.currentPage = 1;
+    }
   },
   mounted() {
     this.fetchPokemons();
@@ -67,6 +73,7 @@ export default {
       searchedPosts() {
         let results = [];
         let arr = this.pokemons.flat().filter(pokemon => pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
+        this.changePaginationOnSearch(arr);
         for (let i = 0; i < arr.length; i += this.maxOnOnePage) {
           results.push(arr.slice(i, i + this.maxOnOnePage));
         }
@@ -77,22 +84,47 @@ export default {
 </script>
 
 <style scoped>
-.pokemons-list{
+.wrapper{
+  width: 100%;
+  height: 100vh;
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: center;
+}
+.paginate-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .pages-wrapper{
   display: flex;
+  flex-wrap: wrap;
 }
 .page-number{
   border: 1px solid black;
-  padding: 10px;
+  padding: 8px;
+  background: white;
   cursor: pointer;
+  border-radius: 5px;
+  margin: 4px;
+  font-size: 22px;
 }
 .current-page {
+  font-size: 24px;
   border: 2px red solid;
-  padding: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  margin: 4px;
+  background: white;
   cursor:pointer;
+}
+@media (max-width: 768px) {
+  .wrapper{
+    height: fit-content;
+  }
+  .paginate-wrapper{
+    margin: 0;
+  }
 }
 </style>

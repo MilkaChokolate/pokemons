@@ -1,5 +1,5 @@
 <template>
-  <div v-show="isActive">
+  <div v-show="isActive" class="pokemon-list">
     <div v-for="pokemon in onePaginate" :key="pokemon.name">
     <one-pokemon :pokemon="pokemon"></one-pokemon>
   </div>
@@ -23,5 +23,14 @@ export default {
 </script>
 
 <style scoped>
+
+.pokemon-list{
+  display: flex;
+  flex-wrap: wrap;
+  width: 85%;
+  text-align: center;
+  min-width: 300px;
+  justify-content: center;
+}
 
 </style>

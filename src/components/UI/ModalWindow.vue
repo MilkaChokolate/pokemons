@@ -1,9 +1,10 @@
 <template>
 <div class="modal" v-if="modalIsOpen" @click="hideModalWindow">
   <div @click.stop class="modal-window-content">
-    <div class="close" @click="hideModalWindow">X</div>
     <slot></slot>
+    <div class="close" @click="hideModalWindow">X</div>
   </div>
+
 </div>
 </template>
 
@@ -34,15 +35,20 @@ export default {
   z-index:2;
 }
 .modal-window-content{
-  min-height: 650px;
-  min-width: 650px;
+  padding: 15px;
+  display: flex;
   margin: auto;
+  text-align: center;
+  justify-content: center;
   z-index: 3;
+  min-width: 300px;
+  background: white;
+  border-radius: 5px;
+  border: 3mm ridge #2c3e50;
 }
 .close {
   color: black;
   cursor: pointer;
-  font-size: 42px;
-  float: right;
+  font-size: 36px;
 }
 </style>
