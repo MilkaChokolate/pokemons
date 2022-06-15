@@ -29,14 +29,15 @@ export default {
     return {
       pokemons: [],
       searchQuery: '',
-      amountPages: 0,
-      currentPage: +localStorage.getItem("currentPage") || 1,
-      limit: 100,
+      amountPages: 0,//общее количество страниц
+      currentPage: +localStorage.getItem("currentPage") || 1, //Сохраняем страницу после перезагрузки
+      limit: 100,//лимит количества получаемых карточек покемонов(можно изменить)
       maxOnOnePage: 12,
       offset: 0
     }
   },
   methods: {
+  //получаем данные из JSON
     async fetchPokemons() {
       let array = [];
       try {
@@ -60,6 +61,7 @@ export default {
       localStorage.setItem('currentPage', String(page))
       this.currentPage = page;
     },
+    //сохраняем пагинацию при сёрче
     changePaginationOnSearch(arr){
       console.log(arr, arr.length)
       this.amountPages = Math.ceil(arr.length / this.maxOnOnePage);
@@ -70,6 +72,7 @@ export default {
     this.fetchPokemons();
   },
   computed: {
+      //делим все полученные объекты с описанием на части для пагинации
       searchedPosts() {
         let results = [];
         let arr = this.pokemons.flat().filter(pokemon => pokemon.name.toLowerCase().includes(this.searchQuery.toLowerCase()))
