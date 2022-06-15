@@ -48,11 +48,6 @@
   caption="Скрин">
   
 <image
-  src="screenshot/screen-9.png"
-  alt="Скрин"
-  caption="Скрин">
-  
-<image
   src="screenshot/screen-10.png"
   alt="Скрин"
   caption="Скрин">
