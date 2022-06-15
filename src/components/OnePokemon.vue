@@ -75,6 +75,7 @@ export default {
     }
   },
   methods: {
+  //Получаем данные о конкретном покемоне
     async fetchUrl() {
       try {
         const response = await axios.get(this.pokemon.url);
