@@ -21,6 +21,7 @@ export default {
     }
   },
   methods: {
+  //При открытии спойлера получаем данные о конкретном навыке покемона (получаем один раз)
     async fetchAbility() {
       try {
         const response = await axios.get(this.ability.url);
